@@ -20,4 +20,5 @@ media
 *jpeg
 *.gz
 *.txt
+*.egg-info
 *tar
