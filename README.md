@@ -1,7 +1,7 @@
 # WAVE: Whole Brain Analysis of Visual Experiences
 
 <p align="center">
-    <img src=assets/figure_1.jpg />
+    <img src=assets/figure_1.png />
 </p>
 
 ## Environment Setup
