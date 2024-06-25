@@ -1,5 +1,9 @@
 # WAVE: Whole Brain Analysis of Visual Experiences
 
+<p align="center">
+    <img src=assets/figure_1.jpg />
+</p>
+
 ## Environment Setup
 
 To set up the necessary environment for the project, follow these steps:
