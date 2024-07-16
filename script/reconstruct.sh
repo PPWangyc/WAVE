@@ -5,7 +5,7 @@ TRAIN_MODE=${2}
 USE_VIS_MASK=${3}
 SEED=${4}
 RECON_PER_SAMPLE=${5}
-AVG_DATA_DIR="data/BOLD5000"
+AVG_DATA_DIR="data/WAVE-BOLD5000"
 CHECKPOINT_PRIOR_DIR='checkpoints/prior'
 CHEKPOINT_SD_DIR='checkpoints/sd-image-variations-diffusers'
 CHECKPOINT_VD_DIR='checkpoints/models--shi-labs--versatile-diffusion/snapshots/2926f8e11ea526b562cd592b099fcf9c2985d0b7'
@@ -46,9 +46,6 @@ python src/reconstruct.py --architecture 'GPT' \
         --weight-decay 0.02 \
         --eval-every-n-steps 1000 \
         --subject-id $SUBJ_ID \
-        --train-perc 0.9 \
-        --eval-perc 0.1 \
-        --test-perc 0 \
         --only-visual True \
         --prior-checkpoint-dir $CHECKPOINT_PRIOR_DIR \
         --sd-ckpt-dir $CHEKPOINT_SD_DIR \

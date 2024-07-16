@@ -2,8 +2,8 @@
 
 SUBJ_ID=${1}
 USE_VIS_MASK=${2}
-AVG_DATA_DIR="data/BOLD5000"
-CHECKPOINT_DIR=checkpoints/$SUBJ_ID/contrastive/model_best_prompt.bin
+AVG_DATA_DIR="data/WAVE-BOLD5000"
+CHECKPOINT_DIR=checkpoints/$SUBJ_ID/contrastive/model_last_prompt.bin
 CHECKPOINT_PRIOR_DIR='/scratch/yl6624/fmri-ecg/checkpoints/fmri/prior'
 CHECKPOINT_VD_DIR='checkpoints/models--shi-labs--versatile-diffusion/snapshots/2926f8e11ea526b562cd592b099fcf9c2985d0b7'
 CHEKPOINT_SD_DIR='checkpoints/sd-image-variations-diffusers'
@@ -11,7 +11,7 @@ TRAINING_STYLE='CSM'
 VIS_MASK_JSON=None
 if [ $USE_VIS_MASK == 'True' ]; then
     VIS_MASK_JSON='checkpoints/ndex_yeo7.json'
-    CHECKPOINT_DIR=checkpoints/$SUBJ_ID/contrastive/model_best_prompt_vis-mask.bin
+    CHECKPOINT_DIR=checkpoints/$SUBJ_ID/contrastive/model_last_prompt_vis-mask.bin
 fi
 
 TARFILE_JSON='/scratch/yl6624/fmri-ecg/config/tarfile/ds_bold5000_subj_3_no_rep.json'
@@ -44,9 +44,6 @@ python src/train_bold5000_decode.py --architecture 'GPT' \
         --weight-decay 0.02 \
         --eval-every-n-steps 1000 \
         --subject-id $SUBJ_ID \
-        --train-perc 0.9 \
-        --eval-perc 0.1 \
-        --test-perc 0 \
         --only-visual True \
         --prior-checkpoint-dir $CHECKPOINT_PRIOR_DIR \
         --sd-ckpt-dir $CHEKPOINT_SD_DIR \
