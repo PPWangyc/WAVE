@@ -3,7 +3,7 @@
 SUBJ_ID=${1}
 USE_VIS_MASK=${2}
 SPARSE_RATIO=0.2
-AVG_DATA_DIR="data/BOLD5000"
+AVG_DATA_DIR="data/WAVE-BOLD5000"
 CHECKPOINT_DIR='checkpoints/upstream/GPT/pytorch_model.bin'
 VIS_MASK_JSON=None
 if [ $USE_VIS_MASK == 'True' ]; then
@@ -40,9 +40,6 @@ python src/train_bold5000_contrastive.py --architecture 'GPT' \
         --weight-decay 0.03 \
         --eval-every-n-steps 1000 \
         --subject-id $SUBJ_ID \
-        --train-perc 0.9 \
-        --eval-perc 0.1 \
-        --test-perc 0 \
         --only-visual False \
         --norm-embs False \
         --train-mode 'region' \
