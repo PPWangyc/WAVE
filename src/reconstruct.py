@@ -399,10 +399,11 @@ if __name__ == '__main__':
         _grid = grids[i]
         _grid.savefig(os.path.join(config['log_dir'], 'recon_img_{}.png'.format(i)))
         _grid = PIL.Image.open(os.path.join(config['log_dir'], 'recon_img_{}.png'.format(i)))
-        wandb.log({"grid": [wandb.Image(_grid, caption=f"{img_names[i]}: {img_labels[i]}")],
-                    "recon_img": [wandb.Image(_best_recon_img, caption=f"{img_names[i]}: {img_labels[i]}")],
-                    "origin_img": [wandb.Image(_origin_img, caption=f"{img_names[i]}: {img_labels[i]}")],
-                })
+        if config['wandb']:
+            wandb.log({"grid": [wandb.Image(_grid, caption=f"{img_names[i]}: {img_labels[i]}")],
+                        "recon_img": [wandb.Image(_best_recon_img, caption=f"{img_names[i]}: {img_labels[i]}")],
+                        "origin_img": [wandb.Image(_origin_img, caption=f"{img_names[i]}: {img_labels[i]}")],
+                    })
     # start evaluation
     # calculate FID
     from model.fid_wrapper import fid_wrapper, calculate_snr
@@ -640,3 +641,6 @@ if config['wandb']:
                "SwAV": swav})
     # log the results_df
     wandb.log({"results_df": wandb.Table(dataframe=results_df)})
+else:
+    print("save results_df to csv")
+    results_df.to_csv(os.path.join(config['log_dir'], 'results_df.csv'), index=False)

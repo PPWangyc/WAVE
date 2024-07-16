@@ -6,10 +6,81 @@
 
 ## Environment Setup
 
-To set up the necessary environment for the project, follow these steps:
+To get started, ensure you have git-lfs and anaconda installed. If git-lfs is not installed, please follow the installation instructions [here](https://git-lfs.github.com/).
 
-`conda env create -f env.yaml
-conda activate wave` 
+Execute the following commands to set up the project environment:
+
+```bash
+cd script
+# make sure you installed git-lfs and anaconda
+source setup.sh
+```
+
+The `setup.sh` script will create a new conda environment named `wave` and install all the necessary packages. Moreover it will also automatically download the processed [BOLD5000 huggingface dataset](https://huggingface.co/datasets/PPWangyc/WAVE-BOLD5000) and the [pre-trained WAVE huggingface model](https://huggingface.co/PPWangyc/WAVE-models).
+
+Important: Please make sure you have installed `git-lfs` before running the setup script. If you haven't installed `git-lfs`, you can install it by following the instructions [here](https://git-lfs.github.com/). We used `git-lfs` to download the datasets and model checkpoints.
+
+## Part A: Contrastive Learning
+We provide the code for training the contrastive learning model in the `src/train_bold5000_contrastive.py` python file. To train the model, run the following command:
+
+```bash
+cd script
+source train_bold5000_contrastive.sh CSI1 False
+# CSI1 is the subject name
+# False means not using the visual network mask
+```
+
+Parameters:
+- `CSI1` is the subject name, we also accept to use "all" as universal training for all subjects
+- `False` means not using the visual network mask, we also accept to use "True" to use the visual network mask
+- 'training-steps' is the number of training steps, increase by 4 times if use "all", unversal training for all subjects
+- 'seed' is the random seed for training, default is 42
+- 'wandb' is whether to log the training process to wandb, default is True
+
+The results are saved in the results/**/contrastive folder. 
+
+## Part B: Diffusion Model
+We provide the code for training the diffusion model in the `src/train_bold5000_decode.py` python file. We use versatile diffusion model to decode the fMRI data. You can also edit the model vd cache path in the script. To train the model, run the following command:
+
+```bash
+cd script
+source train_bold5000_decode.sh CSI1 False
+# CSI1 is the subject name
+# False means not using the visual network mask
+```
+
+Same parameters as the contrastive learning model. The pre-trained contrastive learning model path is set in the script, you can also replace it with your own model path by changing the `CHECKPOINT_DIR` in the `train_decode.sh` script.
+
+## Reconstruction and Evaluation
+We have implemented the reconstruction and evaluation code in the `src/reconstruct.py` python file. We also include the necessary metrics, all the results can be found in local results folder or log to wandb. To reconstruct the fMRI data, run the following command:
+
+```bash
+cd script
+source reconstruct.sh CSI1 region False 2 42
+# CSI1 is the subject name
+# region is the mode represent the whole brain region
+# False means not using the visual network mask
+# 2 is the recon sample number
+# 42 is the random seed for reconstruction
+```
+
+Parameters:
+- `CSI1` is the subject name, "all" to reconstruct all subjects test set data.
+- `region` You can also replace it with "voxel" to reconstruct based on visual network voxel data.
+- `False` means not using the visual network mask, we also accept to use "True" to use the visual network mask.
+- `2` is the number of reconstruction samples, we also accept to use "1" to reconstruct only one sample. In the paper, we use 2 samples for reconstruction.
+- `42` is the random seed for reconstruction, default is 42.
+
+We provided pre-trained models for CSI1 and universal. If you trained your own model, you can replace the `CHECKPOINT_TRAINED_DIR` in the `reconstruct.sh` script with your own model path.
+
+## Dataset and Model
+To support the reproducibility of our work, we provide the processed BOLD5000 dataset and the pre-trained WAVE model. You can download the dataset and model from the following links: 
+- [BOLD5000 huggingface dataset](https://huggingface.co/datasets/PPWangyc/WAVE-BOLD5000)
+- [Pre-trained WAVE huggingface model](https://huggingface.co/PPWangyc/WAVE-models)
+
+Our external fMRI imagination dataset is required IRB approval and DUA to access. If you are interested in the dataset, please contact the authors.
+
+We use V100/A100 GPU for training and reconstruction.
 
 ## Acknowledgements
 
