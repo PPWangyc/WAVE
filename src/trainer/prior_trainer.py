@@ -290,13 +290,19 @@ class PriorTrainer:
             from diffusers import VersatileDiffusionDualGuidedPipeline, UniPCMultistepScheduler
             from diffusers.models import DualTransformer2DModel
             vd_cache_dir = self.args.vd_ckpt_dir
-            vd_pipe =  VersatileDiffusionDualGuidedPipeline.from_pretrained(vd_cache_dir).to('cpu')
+            vd_pipe =  vd_pipe =  VersatileDiffusionDualGuidedPipeline.from_pretrained(
+                "shi-labs/versatile-diffusion",
+                cache_dir=vd_cache_dir,
+                ).to('cpu')
             vd_pipe.image_unet.eval()
             vd_pipe.vae.eval()
             vd_pipe.image_unet.requires_grad_(False)
             vd_pipe.vae.requires_grad_(False)
 
-            vd_pipe.scheduler = UniPCMultistepScheduler.from_pretrained(vd_cache_dir, subfolder="scheduler")
+            vd_pipe.scheduler = UniPCMultistepScheduler.from_pretrained(
+                "shi-labs/versatile-diffusion", 
+                subfolder="scheduler",
+                cache_dir=vd_cache_dir)
             self.num_inference_steps = 20
 
             self.prior_mult = 30
