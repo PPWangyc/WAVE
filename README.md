@@ -33,9 +33,9 @@ source train_bold5000_contrastive.sh CSI1 False
 Parameters:
 - `CSI1` is the subject name, we also accept to use "all" as universal training for all subjects
 - `False` means not using the visual network mask, we also accept to use "True" to use the visual network mask
-- 'training-steps' is the number of training steps, increase by 4 times if use "all", unversal training for all subjects
-- 'seed' is the random seed for training, default is 42
-- 'wandb' is whether to log the training process to wandb, default is True
+- `training-steps` is the number of training steps, increase by 4 times if use "all", unversal training for all subjects
+- `seed` is the random seed for training, default is 42
+- `wandb` is whether to log the training process to wandb, default is True
 
 The results are saved in the results/**/contrastive folder. 
 
