@@ -16,7 +16,7 @@ if [ $USE_VIS_MASK == 'True' ]; then
         VIS_MASK_JSON='checkpoints/WAVE-models/index_yeo7.json'
         CHECKPOINT_TRAINED_DIR=checkpoints/WAVE-models/$SUBJ_ID/decode/model_last_prompt_vd_vis-mask.bin
 fi
-
+echo "The trained checkpoint in use is: $CHECKPOINT_TRAINED_DIR"
 TRAINING_STYLE='CSM'
 LR=1e-5
 LOG_DIR='results/models/BOLD5000/reconstruct-fmri/'
@@ -34,7 +34,7 @@ python src/reconstruct.py --architecture 'GPT' \
         --log-dir $LOG_DIR \
         --log-every-n-steps 100 \
         --is-prompt False \
-        --wandb False \
+        --wandb True \
         --l1-lambda 0 \
         --scheduler 'step' \
         --fp16 True \
