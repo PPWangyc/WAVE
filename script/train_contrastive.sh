@@ -4,10 +4,10 @@ SUBJ_ID=${1}
 USE_VIS_MASK=${2}
 SPARSE_RATIO=0.2
 AVG_DATA_DIR="data/WAVE-BOLD5000"
-CHECKPOINT_DIR='checkpoints/upstream/GPT/pytorch_model.bin'
+CHECKPOINT_DIR='checkpoints/WAVE-models/upstream/GPT/pytorch_model.bin'
 VIS_MASK_JSON=None
 if [ $USE_VIS_MASK == 'True' ]; then
-        VIS_MASK_JSON='checkpoints/index_yeo7.json'
+        VIS_MASK_JSON='checkpoints/WAVE-models/index_yeo7.json'
 
 fi
 TRAINING_STYLE='CSM'
@@ -28,7 +28,7 @@ python src/train_bold5000_contrastive.py --architecture 'GPT' \
         --log-dir $LOG_DIR \
         --log-every-n-steps 100 \
         --is-prompt True \
-        --wandb False \
+        --wandb True \
         --l1-lambda 0 \
         --scheduler 'step' \
         --fp16 True \
