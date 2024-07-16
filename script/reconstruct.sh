@@ -8,13 +8,13 @@ RECON_PER_SAMPLE=${5}
 AVG_DATA_DIR="data/WAVE-BOLD5000"
 CHECKPOINT_PRIOR_DIR='checkpoints/prior'
 CHEKPOINT_SD_DIR='checkpoints/sd-image-variations-diffusers'
-CHECKPOINT_VD_DIR='checkpoints/models--shi-labs--versatile-diffusion/snapshots/2926f8e11ea526b562cd592b099fcf9c2985d0b7'
-CHECKPOINT_TRAINED_DIR=checkpoints/$SUBJ_ID/decode/model_last_prompt_vd.bin
-CHECKPOINT_AUTOENC_DIR=checkpoints/$SUBJ_ID/autoenc/model_last_mindeye_bold5000_voxel.pth
+CHECKPOINT_VD_DIR='checkpoints/vd'
+CHECKPOINT_TRAINED_DIR=checkpoints/WAVE-models/$SUBJ_ID/decode/model_last_prompt_vd.bin
+CHECKPOINT_AUTOENC_DIR=checkpoints/WAVE-models/$SUBJ_ID/autoenc/model_last_mindeye_bold5000_voxel.pth
 VIS_MASK_JSON=None
 if [ $USE_VIS_MASK == 'True' ]; then
-        VIS_MASK_JSON='checkpoints/index_yeo7.json'
-        CHECKPOINT_TRAINED_DIR=checkpoints/$SUBJ_ID/decode/model_last_prompt_vd_vis-mask.bin
+        VIS_MASK_JSON='checkpoints/WAVE-models/index_yeo7.json'
+        CHECKPOINT_TRAINED_DIR=checkpoints/WAVE-models/$SUBJ_ID/decode/model_last_prompt_vd_vis-mask.bin
 fi
 
 TRAINING_STYLE='CSM'
@@ -34,7 +34,7 @@ python src/reconstruct.py --architecture 'GPT' \
         --log-dir $LOG_DIR \
         --log-every-n-steps 100 \
         --is-prompt False \
-        --wandb True \
+        --wandb False \
         --l1-lambda 0 \
         --scheduler 'step' \
         --fp16 True \

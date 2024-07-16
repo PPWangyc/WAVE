@@ -247,12 +247,18 @@ if __name__ == '__main__':
         from diffusers import VersatileDiffusionDualGuidedPipeline, UniPCMultistepScheduler
         from diffusers.models import DualTransformer2DModel
         vd_cache_dir = config['vd_ckpt_dir']
-        vd_pipe =  VersatileDiffusionDualGuidedPipeline.from_pretrained(vd_cache_dir).to('cpu')
+        vd_pipe =  VersatileDiffusionDualGuidedPipeline.from_pretrained(
+            "shi-labs/versatile-diffusion",
+            cache_dir=vd_cache_dir
+            ).to('cpu')
         vd_pipe.image_unet.eval()
         vd_pipe.vae.eval()
         vd_pipe.image_unet.requires_grad_(False)
         vd_pipe.vae.requires_grad_(False)
-        vd_pipe.scheduler = UniPCMultistepScheduler.from_pretrained(vd_cache_dir, subfolder="scheduler")
+        vd_pipe.scheduler = UniPCMultistepScheduler.from_pretrained(
+            "shi-labs/versatile-diffusion", 
+            subfolder="scheduler",
+            cache_dir=vd_cache_dir)
 
         # Set weighting of Dual-Guidance 
         text_image_ratio = .0 # .5 means equally weight text and image, 0 means use only image
