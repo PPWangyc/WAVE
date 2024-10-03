@@ -1,4 +1,4 @@
-# WAVE: Whole Brain Analysis of Visual Experiences
+# WAVE: Decoding Visual Experience and Mapping Semantics through Whole-Brain Analysis Using fMRI Foundation Models
 
 <p align="center">
     <img src=assets/figure_1.png />
