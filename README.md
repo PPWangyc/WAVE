@@ -13,6 +13,7 @@ Execute the following commands to set up the project environment:
 ```bash
 cd script
 # make sure you installed git-lfs and anaconda
+# The code and scripts are tesed on Linux (Ubuntu 20.04)
 source setup.sh
 ```
 
